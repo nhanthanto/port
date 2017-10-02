@@ -1,0 +1,106 @@
+
+<style type="text/css">
+
+#form{
+background-color: #EEEEEE; 
+border-radius: 25px; 
+float: left; 
+width: 30%; 
+margin: 15px; 
+height: 500px;
+}
+.verticalLine {
+  border-left: solid #a0a0a0;
+}
+</style>
+
+
+
+<header>
+  <script src="https://use.fontawesome.com/2fde9906aa.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+</header>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/ecommerce">TheShop</a>
+  <a style="color: white">&copy</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/store/contacts">About Us</a>
+      </li>
+    </ul>
+            <a href="/store/cart">
+          <i style="font-size: 4rem; padding-right: 15px" class="fa fa-shopping-cart" aria-hidden="true"></i>
+        </a>
+  <form style="float: right" class="form-inline">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    </form>
+  </div>
+</nav>
+<br>
+
+<div style="text-align: center;border-radius: 25px" class="container-fluid">
+  <h1 class="display-3">Checkout Page</h1>
+      <div class="row">
+        <div id="form">
+          <h1>Log In</h1>
+          <div>
+            <label>E-Mail</label>
+            <input type="" name="">
+          </div>
+          <div>
+            <label>Password</label>
+            <input type="" name="">
+          </div>
+          <a href="#"><button>Log In</button></a>
+      </div>
+      <div class="verticalLine"></div>
+      <div id="form">
+          <h1>Guest Checkout</h1>
+          <div>
+            <label>First Name</label>
+            <input type="" name="">
+          </div>
+          <div>
+            <label>Last Name</label>
+            <input type="" name="">
+          </div>
+          <div>
+            <label>Address</label>
+            <input type="" name="">
+          </div>
+          <div>
+            <label>Postal Code</label>
+            <input type="" name="">
+          </div>
+          <div>
+            <label>E-mail Address</label>
+            <input type="" name="">
+          </div>
+      </div>
+</div>
+
+
+<%= form_tag charges_path do %>
+  <article>
+    <% if flash[:error].present? %>
+      <div id="error_explanation">
+        <p><%= flash[:error] %></p>
+      </div>
+    <% end %>
+    <label class="amount">
+      <span>Amount: $5.00</span>
+    </label>
+  </article>
+
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          data-description="A month's subscription"
+          data-amount="500"
+          data-locale="auto"></script>
+<% end %>

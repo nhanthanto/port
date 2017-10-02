@@ -1,3 +1,245 @@
+<style type="text/css">
+  #login-modal .modal-dialog {
+    width: 350px;
+}
+
+#login-modal input[type=text], input[type=password] {
+  margin-top: 10px;
+}
+
+#div-login-msg,
+#div-lost-msg,
+#div-register-msg {
+    border: 1px solid #dadfe1;
+    height: 30px;
+    line-height: 28px;
+    transition: all ease-in-out 500ms;
+}
+
+#div-login-msg.success,
+#div-lost-msg.success,
+#div-register-msg.success {
+    border: 1px solid #68c3a3;
+    background-color: #c8f7c5;
+}
+
+#div-login-msg.error,
+#div-lost-msg.error,
+#div-register-msg.error {
+    border: 1px solid #eb575b;
+    background-color: #ffcad1;
+}
+
+#icon-login-msg,
+#icon-lost-msg,
+#icon-register-msg {
+    width: 30px;
+    float: left;
+    line-height: 28px;
+    text-align: center;
+    background-color: #dadfe1;
+    margin-right: 5px;
+    transition: all ease-in-out 500ms;
+}
+
+#icon-login-msg.success,
+#icon-lost-msg.success,
+#icon-register-msg.success {
+    background-color: #68c3a3 !important;
+}
+
+#icon-login-msg.error,
+#icon-lost-msg.error,
+#icon-register-msg.error {
+    background-color: #eb575b !important;
+}
+
+#img_logo {
+    max-height: 100px;
+    max-width: 100px;
+}
+
+/* #########################################
+   #    override the bootstrap configs     #
+   ######################################### */
+
+.modal-backdrop.in {
+    filter: alpha(opacity=50);
+    opacity: .8;
+}
+
+.modal-content {
+    background-color: #ececec;
+    border: 1px solid #bdc3c7;
+    border-radius: 0px;
+    outline: 0;
+}
+
+.modal-header {
+    min-height: 16.43px;
+    padding: 15px 15px 15px 15px;
+    border-bottom: 0px;
+}
+
+.modal-body {
+    position: relative;
+    padding: 5px 15px 5px 15px;
+}
+
+.modal-footer {
+    padding: 15px 15px 15px 15px;
+    text-align: left;
+    border-top: 0px;
+}
+
+.checkbox {
+    margin-bottom: 0px;
+}
+
+.btn {
+    border-radius: 0px;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: none;
+}
+
+.btn-lg, .btn-group-lg>.btn {
+    border-radius: 0px;
+}
+
+.btn-link {
+    padding: 5px 10px 0px 0px;
+    color: #95a5a6;
+}
+
+.btn-link:hover, .btn-link:focus {
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+.glyphicon {
+    top: 0px;
+}
+
+.form-control {
+  border-radius: 0px;
+}
+</style>
+<script type="text/javascript">
+  $(function() {
+    
+    var $formLogin = $('#login-form');
+    var $formLost = $('#lost-form');
+    var $formRegister = $('#register-form');
+    var $divForms = $('#div-forms');
+    var $modalAnimateTime = 300;
+    var $msgAnimateTime = 150;
+    var $msgShowTime = 2000;
+
+    $("form").submit(function () {
+        switch(this.id) {
+            case "login-form":
+                var $lg_username=$('#login_username').val();
+                var $lg_password=$('#login_password').val();
+                if ($lg_username == "ERROR") {
+                    msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "error", "glyphicon-remove", "Login error");
+                } else {
+                    msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "success", "glyphicon-ok", "Login OK");
+                }
+                return false;
+                break;
+            case "lost-form":
+                var $ls_email=$('#lost_email').val();
+                if ($ls_email == "ERROR") {
+                    msgChange($('#div-lost-msg'), $('#icon-lost-msg'), $('#text-lost-msg'), "error", "glyphicon-remove", "Send error");
+                } else {
+                    msgChange($('#div-lost-msg'), $('#icon-lost-msg'), $('#text-lost-msg'), "success", "glyphicon-ok", "Send OK");
+                }
+                return false;
+                break;
+            case "register-form":
+                var $rg_username=$('#register_username').val();
+                var $rg_email=$('#register_email').val();
+                var $rg_password=$('#register_password').val();
+                if ($rg_username == "ERROR") {
+                    msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "error", "glyphicon-remove", "Register error");
+                } else {
+                    msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "success", "glyphicon-ok", "Register OK");
+                }
+                return false;
+                break;
+            default:
+                return false;
+        }
+        return false;
+    });
+    
+    $('#login_register_btn').click( function () { modalAnimate($formLogin, $formRegister) });
+    $('#register_login_btn').click( function () { modalAnimate($formRegister, $formLogin); });
+    $('#login_lost_btn').click( function () { modalAnimate($formLogin, $formLost); });
+    $('#lost_login_btn').click( function () { modalAnimate($formLost, $formLogin); });
+    $('#lost_register_btn').click( function () { modalAnimate($formLost, $formRegister); });
+    $('#register_lost_btn').click( function () { modalAnimate($formRegister, $formLost); });
+    
+    function modalAnimate ($oldForm, $newForm) {
+        var $oldH = $oldForm.height();
+        var $newH = $newForm.height();
+        $divForms.css("height",$oldH);
+        $oldForm.fadeToggle($modalAnimateTime, function(){
+            $divForms.animate({height: $newH}, $modalAnimateTime, function(){
+                $newForm.fadeToggle($modalAnimateTime);
+            });
+        });
+    }
+    
+    function msgFade ($msgId, $msgText) {
+        $msgId.fadeOut($msgAnimateTime, function() {
+            $(this).text($msgText).fadeIn($msgAnimateTime);
+        });
+    }
+    
+    function msgChange($divTag, $iconTag, $textTag, $divClass, $iconClass, $msgText) {
+        var $msgOld = $divTag.text();
+        msgFade($textTag, $msgText);
+        $divTag.addClass($divClass);
+        $iconTag.removeClass("glyphicon-chevron-right");
+        $iconTag.addClass($iconClass + " " + $divClass);
+        setTimeout(function() {
+            msgFade($textTag, $msgOld);
+            $divTag.removeClass($divClass);
+            $iconTag.addClass("glyphicon-chevron-right");
+            $iconTag.removeClass($iconClass + " " + $divClass);
+      }, $msgShowTime);
+    }
+});
+// Search Function
+function myFunction() {
+    // Declare variables
+    var input, filter, ul, li, a, i;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName('li');
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+
 <header>
 	<script src="https://use.fontawesome.com/2fde9906aa.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -5,7 +247,7 @@
 </header>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">TheShop</a>
+  <a class="navbar-brand" href="/ecommerce">TheShop</a>
   <a style="color: white">&copy</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -13,89 +255,227 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#">Categories</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link" href="/store/contacts">About Us</a>
       </li>
       <li>
-      	<a style="padding: 15px" href="">
-      		<i style="font-size: 2rem" class="fa fa-shopping-cart" aria-hidden="true"></i>
-      	</a>
+        <p class="text-center" style="padding-right: 15px;" ><a href="#" class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#login-modal">Login/Reg</a></p>
       </li>
     </ul>
- 	<form class="form-inline">
-	    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-	    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <a href="/store/cart">
+          <i style="font-size: 4rem; padding-right: 15px" class="fa fa-shopping-cart" aria-hidden="true"></i>
+        </a>
+ 	<form style="float: right" class="form-inline">
+	    <input type="text" id="myInput" onkeyup="myFunction()" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
   	</form>
   </div>
 </nav>
 <br>
 
-<div class="jumbotron jumbotron-fluid">
+<div style="text-align: center; background-image: url(https://i.imgur.com/MdMniMd.jpg);image-rendering: -webkit-optimize-contrast;" class="jumbotron jumbotron-fluid">
   <h1 class="display-3">Welcome to TheShop</h1>
-  <p class="lead">Check out our special sales on designer clothing.</p>
-  <p>Fall outfits on sale!</p>
+  <p class="lead">Check out our special sales on new tech</p>
+  <p>Websites for Sale!</p>
   <p class="lead">
     <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
   </p>
 </div>
 
-<div class="container">
+<div style="padding: 15px" class="container">
 	  <div class="row">
     <div class="col">
      <div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="https://thumb.ibb.co/hPwtTw/business_2717063.jpg" alt="business_2717063" border="0" alt="Card image cap">
+  <img class="card-img-top" src="https://i.imgur.com/d8xuk0p.jpg" alt="business_2717063" border="0" alt="Card image cap">
   <div class="card-body">
-    <button type="button" class="btn btn-primary">Add to Cart</button>
+    <p>iPad</p>
+    <p>$199.99</p>
+    <button style="float:right" type="button" class="btn btn-primary">Add to Cart</button>
   </div>
 </div>
     </div>
     <div class="col">
       <div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="https://thumb.ibb.co/hPwtTw/business_2717063.jpg" alt="business_2717063" border="0" alt="Card image cap">
+  <img class="card-img-top" src="https://i.imgur.com/2BhWkmp.jpg" border="0" alt="Card image cap">
   <div class="card-body">
-    <button type="button" class="btn btn-primary">Add to Cart</button>
+    <p>Aedle Headphones</p>
+    <p>$99.99</p>
+    <button style="float:right" type="button" class="btn btn-primary">Add to Cart</button>
   </div>
 </div>
     </div>
     <div class="col">
       <div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="https://thumb.ibb.co/hPwtTw/business_2717063.jpg" alt="business_2717063" border="0" alt="Card image cap">
+  <img class="card-img-top" src="https://i.imgur.com/5h6cGSk.jpg" alt="business_2717063" border="0" alt="Card image cap">
   <div class="card-body">
-    <button type="button" class="btn btn-primary">Add to Cart</button>
+    <p>MacBook Air</p>
+    <p>$599.99</p>
+    <button style="float:right" type="button" class="btn btn-primary">Add to Cart</button>
   </div>
 </div>
     </div>
-  </div>
-</div>
-<div class="container">
-	  <div class="row">
-    <div class="col">
-     <div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="https://thumb.ibb.co/hPwtTw/business_2717063.jpg" alt="business_2717063" border="0" alt="Card image cap">
-  <div class="card-body">
-    <button type="button" class="btn btn-primary">Add to Cart</button>
-  </div>
-</div>
-    </div>
-    <div class="col">
+        <div class="col">
       <div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="https://thumb.ibb.co/hPwtTw/business_2717063.jpg" alt="business_2717063" border="0" alt="Card image cap">
+  <img class="card-img-top" src="https://i.imgur.com/GVyRMWf.jpg" alt="business_2717063" border="0" alt="Card image cap">
   <div class="card-body">
-    <button type="button" class="btn btn-primary">Add to Cart</button>
-  </div>
-</div>
-    </div>
-    <div class="col">
-      <div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="https://thumb.ibb.co/hPwtTw/business_2717063.jpg" alt="business_2717063" border="0" alt="Card image cap">
-  <div class="card-body">
-    <button type="button" class="btn btn-primary">Add to Cart</button>
+    <p>Samsung S7</p>
+    <p>$499.99</p>
+    <button style="float:right" type="button" class="btn btn-primary">Add to Cart</button>
   </div>
 </div>
     </div>
   </div>
 </div>
 
-<a href="/">Portfolio</a>
+<!-- <ul id="myUL">
+  <li><a href="#">Adele</a></li>
+  <li><a href="#">Agnes</a></li>
+
+  <li><a href="#">Billy</a></li>
+  <li><a href="#">Bob</a></li>
+
+  <li><a href="#">Calvin</a></li>
+  <li><a href="#">Christina</a></li>
+  <li><a href="#">Cindy</a></li>
+</ul> -->
+<!-- <div style="padding: 15px" class="container">
+	  <div class="row">
+    <div class="col">
+     <div class="card" style="width: 20rem;">
+  <img class="card-img-top" src="https://thumb.ibb.co/hPwtTw/business_2717063.jpg" alt="business_2717063" border="0" alt="Card image cap">
+  <div class="card-body">
+    <p>Hello Description</p>
+    <p>$19.99</p>
+    <button style="float:right" type="button" class="btn btn-primary">Add to Cart</button>
+  </div>
+</div>
+    </div>
+    <div class="col">
+      <div class="card" style="width: 20rem;">
+  <img class="card-img-top" src="https://thumb.ibb.co/hPwtTw/business_2717063.jpg" alt="business_2717063" border="0" alt="Card image cap">
+  <div class="card-body">
+    <p>Hello Description</p>
+    <p>$19.99</p>
+    <button style="float:right" type="button" class="btn btn-primary">Add to Cart</button>
+  </div>
+</div>
+    </div>
+    <div class="col">
+      <div class="card" style="width: 20rem;">
+  <img class="card-img-top" src="https://thumb.ibb.co/hPwtTw/business_2717063.jpg" alt="business_2717063" border="0" alt="Card image cap">
+  <div class="card-body">
+    <p>Hello Description</p>
+    <p>$19.99</p>
+    <button style="float:right" type="button" class="btn btn-primary">Add to Cart</button>
+  </div>
+</div>
+    </div>
+        <div class="col">
+      <div class="card" style="width: 20rem;">
+  <img class="card-img-top" src="https://thumb.ibb.co/hPwtTw/business_2717063.jpg" alt="business_2717063" border="0" alt="Card image cap">
+  <div class="card-body">
+    <p>Hello Description</p>
+    <p>$19.99</p>
+    <button style="float:right" type="button" class="btn btn-primary">Add to Cart</button>
+  </div>
+</div>
+    </div>
+  </div>
+</div> -->
+
+
+<div style="text-align: center;" >
+  <a href="/"><button>Portfolio</button></a>
+</div>
+
+
+
+<!-- BEGIN # MODAL LOGIN -->
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" align="center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </button>
+        </div>
+                
+                <!-- Begin # DIV Form -->
+                <div id="div-forms">
+                
+                    <!-- Begin # Login Form -->
+                    <form id="login-form">
+                    <div class="modal-body">
+                <div id="div-login-msg">
+                                <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
+                                <span id="text-login-msg">Type your username and password.</span>
+                            </div>
+                <input id="login_username" class="form-control" type="text" placeholder="Username (type ERROR for error effect)" required>
+                <input id="login_password" class="form-control" type="password" placeholder="Password" required>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> Remember me
+                                </label>
+                            </div>
+                  </div>
+                <div class="modal-footer">
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                            </div>
+                  <div>
+                                <button id="login_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
+                                <button id="login_register_btn" type="button" class="btn btn-link">Register</button>
+                            </div>
+                </div>
+                    </form>
+                    <!-- End # Login Form -->
+                    
+                    <!-- Begin | Lost Password Form -->
+                    <form id="lost-form" style="display:none;">
+                  <div class="modal-body">
+                <div id="div-lost-msg">
+                                <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
+                                <span id="text-lost-msg">Type your e-mail.</span>
+                            </div>
+                <input id="lost_email" class="form-control" type="text" placeholder="E-Mail (type ERROR for error effect)" required>
+                  </div>
+                <div class="modal-footer">
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
+                            </div>
+                            <div>
+                                <button id="lost_login_btn" type="button" class="btn btn-link">Log In</button>
+                                <button id="lost_register_btn" type="button" class="btn btn-link">Register</button>
+                            </div>
+                </div>
+                    </form>
+                    <!-- End | Lost Password Form -->
+                    
+                    <!-- Begin | Register Form -->
+                    <form id="register-form" style="display:none;">
+                    <div class="modal-body">
+                <div id="div-register-msg">
+                                <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
+                                <span id="text-register-msg">Register an account.</span>
+                            </div>
+                <input id="register_username" class="form-control" type="text" placeholder="Username (type ERROR for error effect)" required>
+                            <input id="register_email" class="form-control" type="text" placeholder="E-Mail" required>
+                            <input id="register_password" class="form-control" type="password" placeholder="Password" required>
+                  </div>
+                <div class="modal-footer">
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+                            </div>
+                            <div>
+                                <button id="register_login_btn" type="button" class="btn btn-link">Log In</button>
+                                <button id="register_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
+                            </div>
+                </div>
+                    </form>
+                    <!-- End | Register Form -->
+                    
+                </div>
+                <!-- End # DIV Form -->
+                
+      </div>
+    </div>
+  </div>
+    <!-- END # MODAL LOGIN -->
