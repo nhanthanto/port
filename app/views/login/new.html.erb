@@ -126,6 +126,9 @@ input{
 	width: 25%
 }
 
+label {
+  display: block
+}
 </style>
 
 <ul class="navigation">
@@ -154,38 +157,21 @@ input{
 
 
 <div style="padding-top: 15px; "  class="container">
-    <div style="text-align: center;  background-color: rgba(222,222,222,.90)" class="jumbotron" id="home">
+    <div style="text-align: center;background-color: rgba(222,222,222,.90)" class="jumbotron" id="home">
         <h3 class="display-3">Registration</h3>
-        <div class="form-group row">
-  <label for="example-text-input" class="col-2 col-form-label">Name</label>
-  <div class="col-10">
-    <input class="form-control" type="text" placeholder="Name!" id="example-text-input">
-  </div>
-</div>
-<div class="form-group row">
-  <label for="example-search-input" class="col-2 col-form-label">Interests</label>
-  <div class="col-10">
-    <input class="form-control" type="search" placeholder="I do MD5 for fun!" id="example-search-input">
-  </div>
-</div>
-<div class="form-group row">
-  <label for="example-email-input" class="col-2 col-form-label">Email</label>
-  <div class="col-10">
-    <input class="form-control" type="email" placeholder="name@example.com" id="example-email-input">
-  </div>
-</div>
-<div class="form-group row">
-  <label for="example-password-input" class="col-2 col-form-label">Password</label>
-  <div class="col-10">
-    <input class="form-control" type="password" placeholder="******" id="example-password-input">
-  </div>
-</div>
-
-
-
-<button type="submit" class="btn btn-primary">Submit</button>
-
-	</div>
+        <form action="/users" method="post">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>"><br>
+          <label>Name</label>
+          <input type="text" name="user[name]" placeholder="Name"><br>
+          <label>Interests</label>
+          <input type="text" name="user[interest]" placeholder="I include MD5 for fun!"><br>
+          <label>E-Mail</label>
+          <input type="text" name="user[email]" placeholder="name@email.com"><br>
+          <label>Password</label>
+          <input type="password" name="user[password]" placeholder="******"><br>
+          <br>
+          <button value="submit" name="submit">Submit</button>
+        </form>
 </div>
 
 

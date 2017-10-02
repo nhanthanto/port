@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  post '/consumers' => 'consumers#create'
+
+  post '/users' => 'users#create'
+
+  get 'consumers/edit'
+
+  get 'consumers/update'
+
+  get 'consumers/show'
+
+  get 'consumers/destroy'
+
   get '/team' => 'team#index'
 
   get '/service' => 'service#index'

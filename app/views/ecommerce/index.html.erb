@@ -248,22 +248,24 @@ function myFunction() {
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="/ecommerce">TheShop</a>
-  <a style="color: white">&copy</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item">
+      <li style="padding-right: 25px" class="nav-item">
         <a class="nav-link" href="/store/contacts">About Us</a>
       </li>
-      <li>
+      <li style="padding-right: 25px">
         <p class="text-center" style="padding-right: 15px;" ><a href="#" class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#login-modal">Login/Reg</a></p>
       </li>
-    </ul>
-            <a href="/store/cart">
+      <li style="padding-top: 5px">
+                    <a href="/store/cart">
           <i style="font-size: 4rem; padding-right: 15px" class="fa fa-shopping-cart" aria-hidden="true"></i>
         </a>
+      </li>
+    </ul>
+
  	<form style="float: right" class="form-inline">
 	    <input type="text" id="myInput" onkeyup="myFunction()" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
   	</form>
@@ -450,26 +452,29 @@ function myFunction() {
                     <!-- End | Lost Password Form -->
                     
                     <!-- Begin | Register Form -->
-                    <form id="register-form" style="display:none;">
-                    <div class="modal-body">
-                <div id="div-register-msg">
-                                <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
-                                <span id="text-register-msg">Register an account.</span>
-                            </div>
-                <input id="register_username" class="form-control" type="text" placeholder="Username (type ERROR for error effect)" required>
-                            <input id="register_email" class="form-control" type="text" placeholder="E-Mail" required>
-                            <input id="register_password" class="form-control" type="password" placeholder="Password" required>
-                  </div>
-                <div class="modal-footer">
-                            <div>
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
-                            </div>
-                            <div>
-                                <button id="register_login_btn" type="button" class="btn btn-link">Log In</button>
-                                <button id="register_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
-                            </div>
-                </div>
-                    </form>
+<form id="register-form" style="display:none;" action="/consumers" method="post">
+  <div class="modal-body">
+    <div id="div-register-msg">
+    <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
+    <span id="text-register-msg">Register an account.</span>
+    </div>
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input id="register_first" class="form-control" type="text" placeholder="First Name" name="consumer[first]" required>
+      <input id="register_last" class="form-control" type="text" placeholder="Last Name" name="consumer[last]" required>
+      <input id="register_email" class="form-control" type="text" placeholder="E-Mail" name="consumer[email]" required>
+      <input id="register_password" class="form-control" type="password" placeholder="Password" name="consumer[password]" required>
+      <input id="register_first" class="form-control" type="text" placeholder="Address" name="consumer[address]" required>
+    </div>
+    <div class="modal-footer">
+      <div>
+      <button type="submit" class="btn btn-primary btn-lg btn-block" value="Submit">Register</button>
+      </div>
+    <div>
+      <button id="register_login_btn" type="button" class="btn btn-link">Log In</button>
+      <button id="register_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
+    </div>
+  </div>
+</form>
                     <!-- End | Register Form -->
                     
                 </div>
@@ -479,3 +484,20 @@ function myFunction() {
     </div>
   </div>
     <!-- END # MODAL LOGIN -->
+
+<form action="/consumers" method="/post">
+<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="text" name="consumer[first]" placeholder="First">
+  <input type="text" name="consumer[last]" placeholder="Last">
+  <input type="text" name="consumer[email]" placeholder="Email">
+  <input type="password" name="consumer[password]" placeholder="Password">
+  <input type="text" name="consumer[address]" placeholder="Address">
+  <button type="submit" value="submit"></button>
+</form>
+
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |e| %>
+    <% e %>
+  <% end %>
+<% end %>
