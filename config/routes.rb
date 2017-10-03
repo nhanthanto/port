@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   post '/users' => 'users#create'
 
-  get 'consumers/edit'
+  post '/session' => 'login#create'
+
+  get '/logged' => 'login#logged'
 
   get 'consumers/update'
 

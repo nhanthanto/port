@@ -1,4 +1,4 @@
-<style type="text/css">
+<!-- <style type="text/css">
   #login-modal .modal-dialog {
     width: 350px;
 }
@@ -237,7 +237,7 @@ function myFunction() {
         }
     }
 }
-</script>
+</script> -->
 
 
 <header>
@@ -256,8 +256,9 @@ function myFunction() {
       <li style="padding-right: 25px" class="nav-item">
         <a class="nav-link" href="/store/contacts">About Us</a>
       </li>
-      <li style="padding-right: 25px">
-        <p class="text-center" style="padding-right: 15px;" ><a href="#" class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#login-modal">Login/Reg</a></p>
+      <li style="padding-right: : 25px; padding-top: 15px">
+        <!-- <p class="text-center" style="padding-right: 15px;" ><a href="#" class="btn btn-primary btn-lg" role="button" data-toggle="modal" data-target="#login-modal">Login/Reg</a></p> -->
+        <a href=""><strong>Login/Registration</strong></a>
       </li>
       <li style="padding-top: 5px">
                     <a href="/store/cart">
@@ -265,10 +266,10 @@ function myFunction() {
         </a>
       </li>
     </ul>
-
+<!-- 
  	<form style="float: right" class="form-inline">
 	    <input type="text" id="myInput" onkeyup="myFunction()" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-  	</form>
+  	</form> -->
   </div>
 </nav>
 <br>
@@ -278,7 +279,7 @@ function myFunction() {
   <p class="lead">Check out our special sales on new tech</p>
   <p>Websites for Sale!</p>
   <p class="lead">
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    <a class="btn btn-primary btn-lg" href="/" role="button">Return</a>
   </p>
 </div>
 
@@ -384,108 +385,12 @@ function myFunction() {
 </div> -->
 
 
-<div style="text-align: center;" >
-  <a href="/"><button>Portfolio</button></a>
-</div>
-
-
 
 <!-- BEGIN # MODAL LOGIN -->
-<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-      <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header" align="center">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-          </button>
-        </div>
-                
-                <!-- Begin # DIV Form -->
-                <div id="div-forms">
-                
-                    <!-- Begin # Login Form -->
-                    <form id="login-form">
-                    <div class="modal-body">
-                <div id="div-login-msg">
-                                <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
-                                <span id="text-login-msg">Type your username and password.</span>
-                            </div>
-                <input id="login_username" class="form-control" type="text" placeholder="Username (type ERROR for error effect)" required>
-                <input id="login_password" class="form-control" type="password" placeholder="Password" required>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Remember me
-                                </label>
-                            </div>
-                  </div>
-                <div class="modal-footer">
-                            <div>
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
-                            </div>
-                  <div>
-                                <button id="login_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
-                                <button id="login_register_btn" type="button" class="btn btn-link">Register</button>
-                            </div>
-                </div>
-                    </form>
-                    <!-- End # Login Form -->
-                    
-                    <!-- Begin | Lost Password Form -->
-                    <form id="lost-form" style="display:none;">
-                  <div class="modal-body">
-                <div id="div-lost-msg">
-                                <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
-                                <span id="text-lost-msg">Type your e-mail.</span>
-                            </div>
-                <input id="lost_email" class="form-control" type="text" placeholder="E-Mail (type ERROR for error effect)" required>
-                  </div>
-                <div class="modal-footer">
-                            <div>
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
-                            </div>
-                            <div>
-                                <button id="lost_login_btn" type="button" class="btn btn-link">Log In</button>
-                                <button id="lost_register_btn" type="button" class="btn btn-link">Register</button>
-                            </div>
-                </div>
-                    </form>
-                    <!-- End | Lost Password Form -->
-                    
-                    <!-- Begin | Register Form -->
-<form id="register-form" style="display:none;" action="/consumers" method="post">
-  <div class="modal-body">
-    <div id="div-register-msg">
-    <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
-    <span id="text-register-msg">Register an account.</span>
-    </div>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <input id="register_first" class="form-control" type="text" placeholder="First Name" name="consumer[first]" required>
-      <input id="register_last" class="form-control" type="text" placeholder="Last Name" name="consumer[last]" required>
-      <input id="register_email" class="form-control" type="text" placeholder="E-Mail" name="consumer[email]" required>
-      <input id="register_password" class="form-control" type="password" placeholder="Password" name="consumer[password]" required>
-      <input id="register_first" class="form-control" type="text" placeholder="Address" name="consumer[address]" required>
-    </div>
-    <div class="modal-footer">
-      <div>
-      <button type="submit" class="btn btn-primary btn-lg btn-block" value="Submit">Register</button>
-      </div>
-    <div>
-      <button id="register_login_btn" type="button" class="btn btn-link">Log In</button>
-      <button id="register_lost_btn" type="button" class="btn btn-link">Lost Password?</button>
-    </div>
-  </div>
-</form>
-                    <!-- End | Register Form -->
-                    
-                </div>
-                <!-- End # DIV Form -->
-                
-      </div>
-    </div>
-  </div>
+
     <!-- END # MODAL LOGIN -->
 
-<form action="/consumers" method="/post">
+<!--  <form action="/consumers" method="/post">
 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <input type="text" name="consumer[first]" placeholder="First">
   <input type="text" name="consumer[last]" placeholder="Last">
@@ -493,7 +398,7 @@ function myFunction() {
   <input type="password" name="consumer[password]" placeholder="Password">
   <input type="text" name="consumer[address]" placeholder="Address">
   <button type="submit" value="submit"></button>
-</form>
+</form> -->
 
 
 <% if flash[:errors] %>

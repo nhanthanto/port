@@ -132,7 +132,7 @@ h1, h3, p {
     <li class="nav-item"><a href="/service">Services</a></li>
     <li class="nav-item"><a href="/team">Team</a></li>
     <li class="nav-item"><a href="/dash/login">Portal</a></li>
-    <li class="nav-item"><a href="/dash/#bottom">Contact</a></li>
+    <li class="nav-item"><a href="#bottom">Contact</a></li>
     <li class="nav-item"><a href="/">Portfolio</a></li>
 </ul>
 
@@ -153,16 +153,16 @@ h1, h3, p {
 
 <div style="padding-top: 15px; "  class="container">
     <div style="background-color: rgba(222,222,222,.90)" class="jumbotron">
-        <h1 class="display-3">Part of Our Team?</h1>
-        <p class="lead">Please Log In</p>
-        <form action="/session" method="post">
-          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
-          <input type="text" name="Email" placeholder="name@email.com">
-          <input type="password" name="Password" placeholder="******">
-          <button name="submit" value="submit">Submit</button>
-        </form>
+        <h1 class="display-3">Congratulations</h1>
+        <p class="lead">We're so happy you were able to join!</p>
+        <hr class="my-4">
+        <p>We'll be emailing you our Newsletter shortly</p>
+        <p style="padding-top: 20px; text-align: right" class="lead">
+        <a class="btn btn-primary btn-lg" href="/login/new" role="button">Apply Now!</a>
+        </p>
+    </div>
 </div>
-</div>
+
 
 
 
